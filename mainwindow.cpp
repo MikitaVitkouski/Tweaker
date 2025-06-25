@@ -116,8 +116,8 @@ void promptRestart() {
 void MainWindow::onbtnEasyModeClicked() {
     if(!confirmRisk()) return;
 
-    QDir directory = QDir::currentPath(); directory.cdUp(); directory.cdUp();
-    QString basePath = directory.absolutePath();
+    QString basePath = QCoreApplication::applicationDirPath();
+
     applyRegistryFile(basePath + QDir::separator() + "easy.reg");
 
     promptRestart();
@@ -126,8 +126,8 @@ void MainWindow::onbtnEasyModeClicked() {
 void MainWindow::onbtnMediumModeClicked() {
     if(!confirmRisk()) return;
 
-    QDir directory = QDir::currentPath(); directory.cdUp(); directory.cdUp();
-    QString basePath = directory.absolutePath();
+    QString basePath = QCoreApplication::applicationDirPath();
+
     applyRegistryFile(basePath + QDir::separator() + "medium.reg");
 
     promptRestart();
@@ -136,8 +136,8 @@ void MainWindow::onbtnMediumModeClicked() {
 void MainWindow::onbtnHardModeClicked() {
     if(!confirmRisk()) return;
 
-    QDir directory = QDir::currentPath(); directory.cdUp(); directory.cdUp();
-    QString basePath = directory.absolutePath();
+    QString basePath = QCoreApplication::applicationDirPath();
+
     applyRegistryFile(basePath + QDir::separator() + "hard.reg");
 
     promptRestart();
@@ -146,8 +146,8 @@ void MainWindow::onbtnHardModeClicked() {
 void MainWindow::onbtnExpertModeClicked() {
     if(!confirmRisk()) return;
 
-    QDir directory = QDir::currentPath(); directory.cdUp(); directory.cdUp();
-    QString basePath = directory.absolutePath();
+    QString basePath = QCoreApplication::applicationDirPath();
+
     applyRegistryFile(basePath + QDir::separator() + "expert.reg");
 
     promptRestart();
