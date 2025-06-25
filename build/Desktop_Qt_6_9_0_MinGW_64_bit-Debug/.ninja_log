@@ -1,0 +1,11 @@
+# ninja log v6
+2	891	7725604502423303	Tweaker_autogen/timestamp	1cacdb2a4e914ba9
+2	891	7725604502423303	Tweaker_autogen/mocs_compilation.cpp	1cacdb2a4e914ba9
+2	891	7725604502423303	E:/Repositories/Tweaker/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/Tweaker_autogen/timestamp	1cacdb2a4e914ba9
+2	891	7725604502423303	E:/Repositories/Tweaker/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/Tweaker_autogen/mocs_compilation.cpp	1cacdb2a4e914ba9
+909	1023	7725604502946841	CMakeFiles/Tweaker.dir/resources.rc.obj	e37dc7a4feb0dd43
+908	3516	7725604502936323	CMakeFiles/Tweaker.dir/RamLabel.cpp.obj	33fcb8ca4363daf9
+906	4586	7725604502916320	CMakeFiles/Tweaker.dir/main.cpp.obj	f6630c20d7776042
+907	4838	7725604502926321	CMakeFiles/Tweaker.dir/mainwindow.cpp.obj	bf505ea64325bf
+896	4952	7725604502816313	CMakeFiles/Tweaker.dir/Tweaker_autogen/mocs_compilation.cpp.obj	104ffd74732e0c7
+4952	5142	7725604543375843	Tweaker.exe	559b2666870b190e
