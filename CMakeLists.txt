@@ -38,4 +38,5 @@ qt_add_executable(Tweaker
     RamLabel.h
 )
 
+set_target_properties(Tweaker PROPERTIES WIN32_EXECUTABLE TRUE)
 target_link_libraries(Tweaker PRIVATE Qt6::Widgets)
