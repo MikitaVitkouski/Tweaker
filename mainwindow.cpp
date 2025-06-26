@@ -154,11 +154,21 @@ void MainWindow::onbtnExpertModeClicked() {
 }
 
 void MainWindow::updateMemoryUsage() {
-    MEMORYSTATUSEX statex;
+    MEMORYSTATUSEX statex; // struct MEMORYSTATUSEX includes DWORD     dwLength;dwMemoryLoad;ullTotalPhys;ullAvailPhys;ullTotalPageFile;
+                                                                    // ullAvailPageFile;ullTotalVirtual;ullAvailVirtual;ullAvailExtendedVirtual;
     statex.dwLength = sizeof(statex);
     GlobalMemoryStatusEx(&statex);
     memoryUsagePercent = static_cast<int>(statex.dwMemoryLoad);
 
     ramLabel->usage = memoryUsagePercent;
     ramLabel->update();
+
+    double totalRAM = static_cast<double>(statex.ullTotalPhys) / (1024*1024*1024);
+    double usedRAM = memoryUsagePercent * totalRAM/100.0;
+
+    QString usedStr = QString::number(usedRAM, 'f', 2);
+    QString totalStr = QString::number(totalRAM, 'f', 2);
+
+    ui->labelRAMused->setText(usedStr + " GB");
+    ui->labelRAMinstalled->setText(totalStr + " GB");
 }
