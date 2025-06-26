@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QToolTip>
+#include <QStyle>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -163,12 +164,28 @@ void MainWindow::updateMemoryUsage() {
     ramLabel->usage = memoryUsagePercent;
     ramLabel->update();
 
-    double totalRAM = static_cast<double>(statex.ullTotalPhys) / (1024*1024*1024);
-    double usedRAM = memoryUsagePercent * totalRAM/100.0;
+    DWORDLONG totalPhys = statex.ullTotalPhys;
+    DWORDLONG availPhys = statex.ullAvailPhys;
+    DWORDLONG usedPhys = totalPhys - availPhys;
 
-    QString usedStr = QString::number(usedRAM, 'f', 2);
-    QString totalStr = QString::number(totalRAM, 'f', 2);
+    double totalGB = totalPhys / (1024.0 * 1024.0 * 1024.0);
+    double usedGB = usedPhys / (1024.0 * 1024.0 * 1024.0);
+
+    QString usedStr = QString::number(usedGB, 'f', 2);
+    QString totalStr = QString::number(totalGB, 'f', 2);
 
     ui->labelRAMused->setText(usedStr + " GB");
     ui->labelRAMinstalled->setText(totalStr + " GB");
+
+    ui->labelRAMused->setProperty("class", " ");
+    if (usedGB / totalGB < 0.5) {
+        ui->labelRAMused->setProperty("class", "low");
+    } else if (usedGB / totalGB < 0.75) {
+        ui->labelRAMused->setProperty("class", "medium");
+    } else {
+        ui->labelRAMused->setProperty("class", "high");
+    }
+
+    ui->labelRAMused->style()->unpolish(ui->labelRAMused);
+    ui->labelRAMused->style()->polish(ui->labelRAMused);
 }
