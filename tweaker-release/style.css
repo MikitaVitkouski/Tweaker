@@ -27,6 +27,28 @@ QLabel#labelRAMName {
     qproperty-alignment: 'AlignCenter';
 }
 
+QLabel#labelRAMused, QLabel#labelRAMinstalled, QLabel#labelTextOf {
+    color: #00aaff;
+    font-weight: bold;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    qproperty-alignment: 'AlignCenter';
+}
+
+QLabel#labelRAMused.low {
+	color: #66cc99;
+}
+
+QLabel#labelRAMused.medium {
+	color: #ffaa00;
+}
+
+QLabel#labelRAMused.high {
+	color: #ff4444;
+}
+
 QPushButton {
     color: #ffffff;
     font-weight: bold;
