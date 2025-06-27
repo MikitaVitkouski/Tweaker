@@ -31,10 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // RAM representation
     memoryUsagePercent = 0;
+    constexpr double RAM_UPDATE_INTERVAL_MS = 1000;
 
     ramTimer = new QTimer(this);
     connect(ramTimer, &QTimer::timeout, this, &MainWindow::updateMemoryUsage);
-    ramTimer->start(1000);
+    ramTimer->start(RAM_UPDATE_INTERVAL_MS);
     ramLabel = new RamLabel(this);
     ramLabel->setGeometry(510, 70, 150, 100);
     ramLabel->show();
@@ -48,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     // tool tips for buttons
     ui->btnEasyMode->setToolTip("- Printing, taxing, remote regitsry, touch keyboard, Xbox-related services\n"
                                 "- Improves JPEG import quality\n"
-                                "- Geolocation, BITS, Distributed Link Tracking, Program Compatibility Assistant, etc."
+                                "- Geolocation, BITS, Distributed Link Tracking, Program Compatibility Assistant, etc.\n"
                                 "- Game DVR");
     ui->btnMediumMode->setToolTip("Includes everything from easy tweaking mode\n"
                                   "- Windows Defender\n"
@@ -114,48 +115,33 @@ void promptRestart() {
     }
 }
 
-void MainWindow::onbtnEasyModeClicked() {
+void applyModeRegFile(const QString& fileName) {
     if(!confirmRisk()) return;
 
-    QString basePath = QCoreApplication::applicationDirPath();
-
-    applyRegistryFile(basePath + QDir::separator() + "easy.reg");
+    QString regPath = QCoreApplication::applicationDirPath() + QDir::separator() + fileName;
+    applyRegistryFile(regPath);
 
     promptRestart();
+}
+
+void MainWindow::onbtnEasyModeClicked() {
+    applyModeRegFile("easy.reg");
 }
 
 void MainWindow::onbtnMediumModeClicked() {
-    if(!confirmRisk()) return;
-
-    QString basePath = QCoreApplication::applicationDirPath();
-
-    applyRegistryFile(basePath + QDir::separator() + "medium.reg");
-
-    promptRestart();
+    applyModeRegFile("medium.reg");
 }
 
 void MainWindow::onbtnHardModeClicked() {
-    if(!confirmRisk()) return;
-
-    QString basePath = QCoreApplication::applicationDirPath();
-
-    applyRegistryFile(basePath + QDir::separator() + "hard.reg");
-
-    promptRestart();
+    applyModeRegFile("hard.reg");
 }
 
 void MainWindow::onbtnExpertModeClicked() {
-    if(!confirmRisk()) return;
-
-    QString basePath = QCoreApplication::applicationDirPath();
-
-    applyRegistryFile(basePath + QDir::separator() + "expert.reg");
-
-    promptRestart();
+    applyModeRegFile("expert.reg");
 }
 
 void MainWindow::updateMemoryUsage() {
-    MEMORYSTATUSEX statex; // struct MEMORYSTATUSEX includes DWORD     dwLength;dwMemoryLoad;ullTotalPhys;ullAvailPhys;ullTotalPageFile;
+    MEMORYSTATUSEX statex; // struct MEMORYSTATUSEX includes DWORD fields: dwLength;dwMemoryLoad;ullTotalPhys;ullAvailPhys;ullTotalPageFile;
                                                                     // ullAvailPageFile;ullTotalVirtual;ullAvailVirtual;ullAvailExtendedVirtual;
     statex.dwLength = sizeof(statex);
     GlobalMemoryStatusEx(&statex);
@@ -177,10 +163,14 @@ void MainWindow::updateMemoryUsage() {
     ui->labelRAMused->setText(usedStr + " GB");
     ui->labelRAMinstalled->setText(totalStr + " GB");
 
+    double ratio = usedGB/ totalGB;
+    constexpr double RAM_USAGE_LOW = 0.5;
+    constexpr double RAM_USAGE_MEDIUM = 0.75;
+
     ui->labelRAMused->setProperty("class", " ");
-    if (usedGB / totalGB < 0.5) {
+    if (ratio < RAM_USAGE_LOW) {
         ui->labelRAMused->setProperty("class", "low");
-    } else if (usedGB / totalGB < 0.75) {
+    } else if (ratio < RAM_USAGE_MEDIUM) {
         ui->labelRAMused->setProperty("class", "medium");
     } else {
         ui->labelRAMused->setProperty("class", "high");
