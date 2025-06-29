@@ -67,6 +67,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnExpertMode->setToolTip("Includes everything from hard tweaking mode\n"
                                   "- Indexing of disks\n"
                                   "- Cortana");
+
+    // label about with hyperlink to repository
+    ui->labelAbout->setAlignment(Qt::AlignCenter);
+    ui->labelAbout->setText(R"(
+    <a href="https://github.com/MikitaVitkouski/Tweaker/blob/master/README.md" style="font-size: 15px;
+    color: blue;
+    background: transparent;
+    border: none;">
+        About
+    </a>
+)");
+    ui->labelAbout->setTextFormat(Qt::RichText);
+    ui->labelAbout->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    ui->labelAbout->setOpenExternalLinks(true);
 }
 
 MainWindow::~MainWindow()
