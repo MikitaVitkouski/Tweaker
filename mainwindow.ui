@@ -166,6 +166,19 @@
      <string>About</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnCleanPC">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>330</y>
+      <width>300</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clean PC</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

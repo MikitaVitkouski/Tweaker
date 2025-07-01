@@ -30,6 +30,7 @@ private slots:
     void onbtnMediumModeClicked();
     void onbtnHardModeClicked();
     void onbtnExpertModeClicked();
+    void onbtnCleanPCClicked();
     void updateMemoryUsage();
 
 private:

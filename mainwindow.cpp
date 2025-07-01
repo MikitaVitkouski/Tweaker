@@ -45,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnMediumMode, &QPushButton::clicked, this, &MainWindow::onbtnMediumModeClicked);
     connect(ui->btnHardMode, &QPushButton::clicked, this, &MainWindow::onbtnHardModeClicked);
     connect(ui->btnExpertMode, &QPushButton::clicked, this, &MainWindow::onbtnExpertModeClicked);
+    connect(ui->btnCleanPC, &QPushButton::clicked, this, &MainWindow::onbtnCleanPCClicked);
 
     // tool tips for buttons
     ui->btnEasyMode->setToolTip("- Printing, taxing, remote regitsry, touch keyboard, Xbox-related services\n"
@@ -67,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnExpertMode->setToolTip("Includes everything from hard tweaking mode\n"
                                   "- Indexing of disks\n"
                                   "- Cortana");
+    ui->btnCleanPC->setToolTip("Cleans Temp, NVIDIA NV_Cache and NVIDIA Shader Cache");
 
     // label about with hyperlink to repository
     ui->labelAbout->setAlignment(Qt::AlignCenter);
@@ -98,6 +100,26 @@ void applyRegistryFile(const QString& regFilePath) {
     if (!success) {
         qWarning("Cannot load regedit!");
     }
+}
+
+void applyBatFile(const QString& batFilePath) {
+    QProcess process;
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+    // don't show cmd window
+    process.setProcessChannelMode(QProcess::MergedChannels);
+    process.setProcessEnvironment(env);
+    process.setCreateProcessArgumentsModifier([](QProcess::CreateProcessArguments *args) {
+        args->flags |= CREATE_NO_WINDOW;
+    });
+
+    process.start(batFilePath);
+    if (!process.waitForStarted()) {
+        qWarning("Cannot start cleaning script!");
+        return;
+    }
+
+    process.waitForFinished();
 }
 
 bool confirmRisk() {
@@ -138,6 +160,11 @@ void applyModeRegFile(const QString& fileName) {
     promptRestart();
 }
 
+void applyCMDFile(const QString& fileName) {
+    QString batPath = QCoreApplication::applicationDirPath() + QDir::separator() + fileName;
+    applyBatFile(batPath);
+}
+
 void MainWindow::onbtnEasyModeClicked() {
     applyModeRegFile("easy.reg");
 }
@@ -152,6 +179,10 @@ void MainWindow::onbtnHardModeClicked() {
 
 void MainWindow::onbtnExpertModeClicked() {
     applyModeRegFile("expert.reg");
+}
+
+void MainWindow::onbtnCleanPCClicked() {
+    applyCMDFile("cleaning.bat");
 }
 
 void MainWindow::updateMemoryUsage() {
