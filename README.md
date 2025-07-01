@@ -1,10 +1,10 @@
 ## Screenshots
 
-![image](https://github.com/user-attachments/assets/fe7a11d5-fe6d-4958-a31a-3b01ceb3cc70)
+![image](https://github.com/user-attachments/assets/41a18eeb-163c-406a-b40d-bb4f5b04bd3f)
 
 ## Description
 
-Choose mode of tweak: easy, medium, hard or expert. Decrease RAM usage without many actions manually. I use this after Windows reinstall to disable useless from my point of view Windows functions.
+Choose mode of tweak: easy, medium, hard or expert. Decrease RAM usage without many actions manually. Clean up junk files of Windows in Temp and Nvidia cache files to get free space on system disk. I use this after Windows reinstall to disable useless from my point of view Windows functionality.
 
 ### Key Changes Applied
 
